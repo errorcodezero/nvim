@@ -1,3 +1,5 @@
+local telescope = require("telescope.builtin")
+
 -- Clears highlights after slash searching for something
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
@@ -18,9 +20,6 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open Error Float" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open Error Location List" })
 
-local telescope = require("telescope.builtin")
-vim.keymap.set("n", "<leader>sh", telescope.help_tags, { desc = "[S]earch [H]elp" })
-vim.keymap.set("n", "<leader>sk", telescope.keymaps, { desc = "[S]earch [K]eymaps" })
 vim.keymap.set("n", "<leader>sf", telescope.find_files, { desc = "[S]earch [F]iles" })
 vim.keymap.set("n", "<leader>ss", telescope.builtin, { desc = "[S]earch [S]elect Telescope" })
 vim.keymap.set("n", "<leader>sw", telescope.grep_string, { desc = "[S]earch current [W]ord" })
@@ -29,7 +28,7 @@ vim.keymap.set("n", "<leader>sd", telescope.diagnostics, { desc = "[S]earch [D]i
 vim.keymap.set("n", "<leader>sr", telescope.resume, { desc = "[S]earch [R]esume" })
 vim.keymap.set("n", "<leader>s.", telescope.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 vim.keymap.set("n", "<leader><leader>", telescope.buffers, { desc = "[ ] Find existing buffers" })
-vim.keymap.set("n", "<leader>cx", telescope.colorscheme, {})
+vim.keymap.set("n", "<leader>sc", telescope.colorscheme, { desc = "[S]earch [C]olorschemes" })
 
 vim.keymap.set("n", "<leader>/", function()
 	-- You can pass additional configuration to Telescope to change the theme, layout, etc.
@@ -116,39 +115,46 @@ gitMap("n", "<leader>tD", gitsigns.preview_hunk_inline, { desc = "[T]oggle git s
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 	callback = function(event)
-		-- A lot of stuff is in the lspconfig.lua file too but there's way too much to migrate.
-		local lspMap = function(keys, func, desc, mode)
-			mode = mode or "n"
-			vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
-		end
-
-		-- Jump to the definition of the word under your cursor.
-		--  This is where a variable was first declared, or where a function is defined, etc.
-		--  To jump back, press <C-t>.
-		lspMap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-
-		-- Find references for the word under your cursor.
-		lspMap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-
-		-- Jump to the implementation of the word under your cursor.
-		--  Useful when your language has ways of declaring types without an actual implementation.
-		lspMap("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-
-		-- Jump to the type of the word under your cursor.
-		--  Useful when you're not sure what type a variable is and you want to see
-		--  the definition of its *type*, not where it was *defined*.
-		lspMap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-
-		-- Fuzzy find all the symbols in your current document.
-		--  Symbols are things like variables, functions, types, etc.
-		lspMap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-
-		-- Fuzzy find all the symbols in your current workspace.
-		--  Similar to document symbols, except searches over your entire project.
-		lspMap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-
-		lspMap("<leader>th", function()
+		vim.keymap.set("n", "<leader>gd", telescope.lsp_definitions, { desc = "[G]oto [D]efinition" })
+		vim.keymap.set("n", "<leader>gr", telescope.lsp_references, { desc = "[G]oto [R]eferences" })
+		vim.keymap.set("n", "<leader>gI", telescope.lsp_implementations, { desc = "[G]oto [I]mplementation" })
+		vim.keymap.set("n", "<leader>gt", telescope.lsp_type_definitions, { desc = "[T]ype Definition" })
+		vim.keymap.set("n", "<leader>gs", telescope.lsp_document_symbols, { desc = "Document [S]ymbols" })
+		vim.keymap.set("n", "<leader>gws", telescope.lsp_dynamic_workspace_symbols, { desc = "[W]orkspace [S]ymbols" })
+		vim.keymap.set("n", "<leader>gth", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 		end)
 	end,
 })
+
+local harpoon = require("harpoon")
+
+vim.keymap.set("n", "<leader>aa", function()
+	harpoon:list():add()
+end, { desc = "[A]dd to Harpoon" })
+vim.keymap.set("n", "<leader>ae", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "[E]nter quick menu" })
+
+vim.keymap.set("n", "<leader>a1", function()
+	harpoon:list():select(1)
+end, { desc = "File [1]" })
+vim.keymap.set("n", "<leader>a2", function()
+	harpoon:list():select(2)
+end, { desc = "File [2]" })
+vim.keymap.set("n", "<leader>a3", function()
+	harpoon:list():select(3)
+end, { desc = "File [3]" })
+vim.keymap.set("n", "<leader>a4", function()
+	harpoon:list():select(4)
+end, { desc = "File [4]" })
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<leader>ah", function()
+	harpoon:list():prev()
+end, { desc = "Previous" })
+vim.keymap.set("n", "<leader>al", function()
+	harpoon:list():next()
+end, { desc = "Next" })
+
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [U]ndotree" })

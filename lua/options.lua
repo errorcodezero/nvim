@@ -73,4 +73,5 @@ vim.opt.shiftwidth = 4
 
 local colorschemes = { "catppuccin", "everforest" }
 
+math.randomseed(os.time())
 vim.cmd.colorscheme(colorschemes[math.random(#colorschemes)])
