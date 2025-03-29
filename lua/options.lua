@@ -71,7 +71,8 @@ vim.opt.confirm = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 
-local colorschemes = { "catppuccin", "everforest" }
+local colorschemes =
+	{ "catppuccin", "everforest", "gruvbox", "tokyonight-moon", "tokyonight-night", "tokyonight-storm" }
 
 math.randomseed(os.time())
 vim.cmd.colorscheme(colorschemes[math.random(#colorschemes)])
