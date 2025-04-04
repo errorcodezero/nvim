@@ -62,6 +62,7 @@ return {
 
 			-- Diagnostic Config
 			-- See :help vim.diagnostic.Opts
+
 			vim.diagnostic.config({
 				severity_sort = true,
 				float = { border = "rounded", source = "if_many" },
@@ -106,6 +107,7 @@ return {
 				ts_ls = {},
 				svelte = {},
 				clangd = {},
+				gopls = {},
 				--
 
 				lua_ls = {
@@ -149,6 +151,14 @@ return {
 				-- Typescript
 				"eslint_d",
 				"prettierd",
+
+				-- Go
+				"gofumpt",
+				"goimports",
+				"gomodifytags",
+				"gotests",
+				"iferr",
+				"impl",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
