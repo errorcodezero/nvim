@@ -80,8 +80,10 @@ local colorschemes = {
 	"catppuccin-macchiato",
 	"catppuccin-frappe",
 	"catppuccin-mocha",
-	"minicyan",
-	"minischeme",
+	"material-deeper",
+	"material-deep-ocean",
+	"material-palenight",
+	"material-oceanic",
 }
 
 math.randomseed(os.time())
