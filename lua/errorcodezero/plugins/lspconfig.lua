@@ -63,6 +63,8 @@ return {
 			-- Diagnostic Config
 			-- See :help vim.diagnostic.Opts
 
+			local nvim_lsp = require("lspconfig")
+
 			vim.diagnostic.config({
 				severity_sort = true,
 				float = { border = "rounded", source = "if_many" },
@@ -103,8 +105,13 @@ return {
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
-				deno = {},
-				ts_ls = {},
+				deno = {
+					root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+				},
+				ts_ls = {
+					root_dir = nvim_lsp.util.root_pattern("package.json"),
+					single_file_support = false,
+				},
 				svelte = {},
 				clangd = {},
 				gopls = {},

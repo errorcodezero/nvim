@@ -19,6 +19,7 @@ vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementa
 vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Open Error Float" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open Error Location List" })
+vim.keymap.set("n", "<leader>gl", ":ClangdSwitchSourceHeader<enter>")
 
 vim.keymap.set("n", "<leader>sf", telescope.find_files, { desc = "[S]earch [F]iles" })
 vim.keymap.set("n", "<leader>ss", telescope.builtin, { desc = "[S]earch [S]elect Telescope" })
