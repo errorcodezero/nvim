@@ -1,0 +1,3 @@
+# ErrorNvim
+
+My neovim config.
