@@ -10,6 +10,8 @@ return {
 				"rust",
 				"typescript",
 				"javascript",
+				"astro",
+				"svelte",
 				"html",
 				"css",
 				"markdown",

@@ -15,7 +15,6 @@ return {
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
-			{ "Saghen/blink.cmp", opts = {}, build = "cargo build -r" }
 		},
 		config = function()
 			local servers = {
@@ -29,6 +28,7 @@ return {
 				svelte = {},
 				clangd = {},
 				gopls = {},
+				astro = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -68,6 +68,6 @@ return {
 					end,
 				},
 			})
-		end
-	}
+		end,
+	},
 }
