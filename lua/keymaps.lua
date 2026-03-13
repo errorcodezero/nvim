@@ -31,28 +31,6 @@ vim.keymap.set("n", "<leader>s.", telescope.oldfiles, { desc = '[S]earch Recent 
 vim.keymap.set("n", "<leader><leader>", telescope.buffers, { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader>sc", telescope.colorscheme, { desc = "[S]earch [C]olorschemes" })
 
-vim.keymap.set("n", "<leader>/", function()
-	-- You can pass additional configuration to Telescope to change the theme, layout, etc.
-	telescope.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
-end, { desc = "[/] Fuzzily search in current buffer" })
-
--- It's also possible to pass additional configuration options.
---  See `:help telescope.builtin.live_grep()` for information about particular keys
-vim.keymap.set("n", "<leader>s/", function()
-	telescope.live_grep({
-		grep_open_files = true,
-		prompt_title = "Live Grep in Open Files",
-	})
-end, { desc = "[S]earch [/] in Open Files" })
-
--- Shortcut for searching your Neovim configuration files
-vim.keymap.set("n", "<leader>sn", function()
-	telescope.find_files({ cwd = vim.fn.stdpath("config") })
-end, { desc = "[S]earch [N]eovim files" })
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -128,34 +106,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-local harpoon = require("harpoon")
-
-vim.keymap.set("n", "<leader>aa", function()
-	harpoon:list():add()
-end, { desc = "[A]dd to Harpoon" })
-vim.keymap.set("n", "<leader>ae", function()
-	harpoon.ui:toggle_quick_menu(harpoon:list())
-end, { desc = "[E]nter quick menu" })
-
-vim.keymap.set("n", "<leader>a1", function()
-	harpoon:list():select(1)
-end, { desc = "File [1]" })
-vim.keymap.set("n", "<leader>a2", function()
-	harpoon:list():select(2)
-end, { desc = "File [2]" })
-vim.keymap.set("n", "<leader>a3", function()
-	harpoon:list():select(3)
-end, { desc = "File [3]" })
-vim.keymap.set("n", "<leader>a4", function()
-	harpoon:list():select(4)
-end, { desc = "File [4]" })
-
--- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<leader>ah", function()
-	harpoon:list():prev()
-end, { desc = "Previous" })
-vim.keymap.set("n", "<leader>al", function()
-	harpoon:list():next()
-end, { desc = "Next" })
-
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [U]ndotree" })
+-- vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Toggle [U]ndotree" })
