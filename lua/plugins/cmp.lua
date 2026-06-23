@@ -1,7 +1,10 @@
 return {
 	"saghen/blink.cmp",
-	dependencies = { "rafamadriz/friendly-snippets" },
-	build = "cargo build -r",
+	dependencies = { "saghen/blink.lib", "rafamadriz/friendly-snippets" },
+	version = "*",
+	build = function()
+		require("blink.cmp").download({ force = true, tags = "*" }):pwait()
+	end,
 	opts = {
 		keymap = { preset = "super-tab" },
 
