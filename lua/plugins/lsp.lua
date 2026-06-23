@@ -27,7 +27,6 @@ return {
 				},
 				svelte = {},
 				clangd = {},
-				gopls = {},
 				astro = {},
 				lua_ls = {
 					settings = {
